@@ -1,6 +1,6 @@
 """ pdfXBlock main Python class"""
 
-import pkg_resources
+import importlib.resources as pkg_resources
 from django.template import Context, Template
 
 from xblock.core import XBlock
@@ -50,14 +50,14 @@ class pdfXBlock(XBlock):
         Gets the content of a resource
         """
         resource_content = pkg_resources.resource_string(__name__, resource_path)
-        return unicode(resource_content)
+        return str(resource_content.decode('utf-8'))
 
     def render_template(self, template_path, context={}):
         """
         Evaluate a template by resource path, applying the provided context
         """
         template_str = self.load_resource(template_path)
-        return Template(template_str).render(Context(context))
+        return Template(template_str).render(context)
 
     '''
     Main functions
