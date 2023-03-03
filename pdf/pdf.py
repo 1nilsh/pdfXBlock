@@ -45,19 +45,22 @@ class pdfXBlock(XBlock):
     '''
     Util functions
     '''
-    def load_resource(self, resource_path):
-        """
-        Gets the content of a resource
-        """
-        resource_content = pkg_resources.read_text(__name__, resource_path)
-        return str(resource_content.decode('utf-8'))
+    def create_fragment(self, context, template, css, js, js_init):
+        frag = Fragment()
 
-    def render_template(self, template_path, context={}):
-        """
-        Evaluate a template by resource path, applying the provided context
-        """
-        template_str = self.load_resource(template_path)
-        return Template(template_str).render(context)
+        frag.add_content(
+            self.loader.render_django_template(
+                template,
+                context=context,
+            )
+        )
+
+        frag.add_css(self.resource_string(css))
+
+        frag.add_javascript(self.resource_string(js))
+        frag.initialize_js(js_init)
+        self.include_theme_files(frag)
+        return frag
 
     '''
     Main functions
@@ -75,12 +78,15 @@ class pdfXBlock(XBlock):
             'source_text': self.source_text,
             'source_url': self.source_url
         }
-        html = self.render_template('static/html/pdf_view.html', context)
-        
-        frag = Fragment(html)
-        frag.add_css(self.load_resource("static/css/pdf.css"))
-        frag.add_javascript(self.load_resource("static/js/pdf_view.js"))
-        frag.initialize_js('pdfXBlockInitView')
+
+        frag = self.create_fragment(
+            context,
+            template="static/html/pdf_view.html",
+            css="static/css/pdf.css",
+            js="static/js/pdf_view.js",
+            js_init="pdfXBlockInitView"
+        )
+
         return frag
 
     def studio_view(self, context=None):
@@ -95,11 +101,15 @@ class pdfXBlock(XBlock):
             'source_text': self.source_text,
             'source_url': self.source_url
         }
-        html = self.render_template('static/html/pdf_edit.html', context)
-        
-        frag = Fragment(html)
-        frag.add_javascript(self.load_resource("static/js/pdf_edit.js"))
-        frag.initialize_js('pdfXBlockInitEdit')
+
+        frag = self.create_fragment(
+            context,
+            template="static/html/pdf_edit.html",
+            css="static/css/pdf.css",
+            js="static/js/pdf_edit.js",
+            js_init="pdfXBlockInitEdit"
+        )
+
         return frag
 
     @XBlock.json_handler
