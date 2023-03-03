@@ -6,8 +6,10 @@ from django.template import Context, Template
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
+from xblockutils.resources import ResourceLoader
 
 class pdfXBlock(XBlock):
+    loader = ResourceLoader(__name__)
 
     '''
     Icon of the XBlock. Values : [other (default), video, problem]
