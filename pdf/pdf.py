@@ -92,9 +92,9 @@ class pdfXBlock(XBlock):
 
         frag = self.create_fragment(
             context,
-            template="static/html/pdf_view.html",
-            css="static/css/pdf.css",
-            js="static/js/pdf_view.js",
+            template="pdf_view.html",
+            css="pdf.css",
+            js="pdf_view.js",
             js_init="pdfXBlockInitView"
         )
 
@@ -115,9 +115,9 @@ class pdfXBlock(XBlock):
 
         frag = self.create_fragment(
             context,
-            template="static/html/pdf_edit.html",
-            css="static/css/pdf.css",
-            js="static/js/pdf_edit.js",
+            template="pdf_edit.html",
+            css="pdf.css",
+            js="pdf_edit.js",
             js_init="pdfXBlockInitEdit"
         )
 
