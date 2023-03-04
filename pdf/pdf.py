@@ -8,6 +8,8 @@ from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
 from xblockutils.resources import ResourceLoader
 
+from . import static
+
 class pdfXBlock(XBlock):
     loader = ResourceLoader(__name__)
 
@@ -51,7 +53,7 @@ class pdfXBlock(XBlock):
     @staticmethod
     def resource_string(path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.resource_string(__name__, path)
+        data = pkg_resources.read_text(static, path)
         return data.decode("utf8")
 
     def create_fragment(self, context, template, css, js, js_init):
@@ -90,9 +92,9 @@ class pdfXBlock(XBlock):
 
         frag = self.create_fragment(
             context,
-            template="static/html/pdf_view.html",
-            css="static/css/pdf.css",
-            js="static/js/pdf_view.js",
+            template="html/pdf_view.html",
+            css="css/pdf.css",
+            js="js/pdf_view.js",
             js_init="pdfXBlockInitView"
         )
 
@@ -113,9 +115,9 @@ class pdfXBlock(XBlock):
 
         frag = self.create_fragment(
             context,
-            template="static/html/pdf_edit.html",
-            css="static/css/pdf.css",
-            js="static/js/pdf_edit.js",
+            template="html/pdf_edit.html",
+            css="css/pdf.css",
+            js="js/pdf_edit.js",
             js_init="pdfXBlockInitEdit"
         )
 
