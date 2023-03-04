@@ -47,6 +47,13 @@ class pdfXBlock(XBlock):
     '''
     Util functions
     '''
+
+    @staticmethod
+    def resource_string(path):
+        """Handy helper for getting resources from our kit."""
+        data = pkg_resources.resource_string(__name__, path)
+        return data.decode("utf8")
+
     def create_fragment(self, context, template, css, js, js_init):
         frag = Fragment()
 
