@@ -1,14 +1,12 @@
 """ pdfXBlock main Python class"""
 
-import importlib.resources as pkg_resources
+from importlib_resources import files
 from django.template import Context, Template
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
 from xblockutils.resources import ResourceLoader
-
-from pdf import static
 
 class pdfXBlock(XBlock):
     loader = ResourceLoader(__name__)
@@ -53,7 +51,7 @@ class pdfXBlock(XBlock):
     @staticmethod
     def resource_string(path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.read_text(static, path)
+        data = files('pdf.static').joinpath(path).read_text()
         return data.decode("utf8")
 
     def create_fragment(self, context, template, css, js, js_init):
