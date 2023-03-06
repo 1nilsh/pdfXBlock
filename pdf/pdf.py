@@ -52,7 +52,7 @@ class pdfXBlock(XBlock):
     def resource_string(path):
         """Handy helper for getting resources from our kit."""
         data = files('pdf.static').joinpath(path).read_text()
-        return data.decode("utf8")
+        return data
 
     def create_fragment(self, context, template, css, js, js_init):
         frag = Fragment()
