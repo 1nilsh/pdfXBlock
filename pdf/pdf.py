@@ -68,7 +68,6 @@ class pdfXBlock(XBlock):
 
         frag.add_javascript(self.resource_string(js))
         frag.initialize_js(js_init)
-        self.include_theme_files(frag)
         return frag
 
     '''
