@@ -8,7 +8,7 @@ from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
 from xblockutils.resources import ResourceLoader
 
-from pdf.static import static
+from pdf import static
 
 class pdfXBlock(XBlock):
     loader = ResourceLoader(__name__)
